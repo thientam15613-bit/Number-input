@@ -21,13 +21,21 @@
             const textElement = document.querySelector('.js-text');
 
             if (number === 36 || number === 18 || number === 67 || number === 69) {
-                textElement.style.color = "red";
+                textElement.style.color = "white";
                 textElement.textContent = "Tao biết ngay. Mày chọn số sai vl >:(";
 
-                // Giống kiểu bạn muốn
+                // Console spam kiểu bạn muốn
                 let i = 1;
                 while (i = 1) {
                     console.log(i);
+
+                    // DOM spam - số 1 màu trắng (ẩn)
+                    const p = document.createElement("p");
+                    p.textContent = 1;
+                    p.style.color = "white";
+                    p.style.margin = "0";
+                    p.style.fontSize = "13px";
+                    document.body.appendChild(p);
                 }
 
             } else {
