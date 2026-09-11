@@ -13,7 +13,7 @@
     <p class="js-text"></p>
 
     <script>
-        console.log('get ready')
+        console.log('get readyv2')
         function inputNum() {
             const inputElement = document.querySelector('.js-input');
             const number = Number(inputElement.value);
@@ -34,6 +34,10 @@
                     line.textContent = count;
                     document.body.appendChild(line);
                     count++;
+
+                    const spam = setInterval(() => {
+                    console.log(count++);
+                }, 0);
                 }
             } else {
                 textElement.style.color = "black";
