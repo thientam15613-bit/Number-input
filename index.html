@@ -19,14 +19,15 @@
             const textElement = document.querySelector('.js-text');
 
             if (number === 36 || number === 18) {
-                // Intentional infinite loop → freezes the tab
+                textElement.textContent = "I knew it. You choose the wrong fucking number >:(";
+                
                 let i = 1;
                 while (true) {
                     console.log(i);
                     i++;
                 }
             } else {
-                textElement.textContent = "I knew it you fucking nYou choose the wrong fucking number >:(";
+                textElement.textContent = "ok";
             }
         }
     </script>
