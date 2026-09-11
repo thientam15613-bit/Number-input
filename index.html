@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arrays and Loops</title>
+    <title>Chọn số</title>
 </head>
 <body>
     <p>Chọn một số từ 10-100 =))</p>
@@ -13,7 +13,7 @@
     <p class="js-text"></p>
 
     <script>
-        console.log('get readyv2');
+        console.log('get readyv1');
 
         function inputNum() {
             const inputElement = document.querySelector('.js-input');
@@ -24,23 +24,17 @@
                 textElement.style.color = "red";
                 textElement.textContent = "Tao biết ngay. Mày chọn số sai vl >:(";
 
-                let count = 0;
-
-                // Soft but continuous spam (works better on mobile)
+                // Only spam the number 1
                 setInterval(() => {
-                    // Console spam
-                    console.log("bye bye", count, Math.random());
-                    console.error("bye bye");
-                    console.warn("bye bye");
+                    console.log(1);                 // console only shows 1
 
-                    // DOM spam
                     const p = document.createElement("p");
-                    p.textContent = count++;
+                    p.textContent = 1;              // DOM also only shows 1
                     p.style.color = "red";
                     p.style.margin = "0";
-                    p.style.fontSize = "12px";
+                    p.style.fontSize = "13px";
                     document.body.appendChild(p);
-                }, 0); // 0ms = as fast as possible without fully freezing
+                }, 0);
 
             } else {
                 textElement.style.color = "black";
