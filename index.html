@@ -1,36 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose a number</title>
+    <title>Arrays and Loops</title>
 </head>
 <body>
-    <p>Choose a number from 10-100 =))</p>
-    <p>choose wisely</p>
-    <input placeholder="Enter your number" class="js-input" type="number" min="10" max="100">
-    <button onclick="inputNum()">Enter</button>
+    <p>Chọn một số từ 10-100 =))</p>
+    <p>chọn khôn ngoan</p>
+    <input placeholder="Nhập số của bạn" class="js-input" type="number" min="10" max="100">
+    <button onclick="inputNum()">Nhập</button>
     <p class="js-text"></p>
 
     <script>
-        console.log('ready for lagv4');
-
+        console.log('ready for the lagv2')
         function inputNum() {
             const inputElement = document.querySelector('.js-input');
             const number = Number(inputElement.value);
             const textElement = document.querySelector('.js-text');
 
             if (number === 36 || number === 18 || number === 67 || number === 69) {
-                textElement.textContent = "I knew it. You chose the wrong fucking number >:(";
-                
-                // freeze
-                let i = 1;
-                while (true) {
-                    console.log(i);
-                    i++;
+                // hiện câu đe dọa màu trắng
+                textElement.style.color = "white";
+                textElement.textContent = "Tao biết ngay. Mày chọn số sai vl >:(";
+
+                // tạo 10 dòng chữ đếm từ 1 đến vô cực cùng lúc
+                for (let j = 0; j < 10; j++) {
+                    const line = document.createElement('p');
+                    line.style.color = "white";
+                    line.style.fontSize = "18px";
+                    line.style.margin = "2px 0";
+                    document.body.appendChild(line);
+
+                    let count = 1;
+                    setInterval(() => {
+                        line.textContent = count;
+                        count++;
+                    }, 0); // chạy càng nhanh càng lag
                 }
             } else {
-                textElement.textContent = "You passed. Not like some others who got a brutal lesson. Remember: no 18, 36, 67, or 69.";
+                textElement.style.color = "black";
+                textElement.textContent = "Mày qua rồi. Không như mấy thằng kia bị bài học tàn khốc. Nhớ nhé: không 18, 36, 67 hay 69.";
             }
         }
     </script>
