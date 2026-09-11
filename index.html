@@ -13,30 +13,27 @@
     <p class="js-text"></p>
 
     <script>
-        console.log('ready for the lagv2')
+        console.log('get ready')
         function inputNum() {
             const inputElement = document.querySelector('.js-input');
             const number = Number(inputElement.value);
             const textElement = document.querySelector('.js-text');
 
             if (number === 36 || number === 18 || number === 67 || number === 69) {
-                // hiện câu đe dọa màu trắng
+                // câu đe dọa màu trắng
                 textElement.style.color = "white";
                 textElement.textContent = "Tao biết ngay. Mày chọn số sai vl >:(";
 
-                // tạo 10 dòng chữ đếm từ 1 đến vô cực cùng lúc
-                for (let j = 0; j < 10; j++) {
+                // nhồi DOM bằng hàng nghìn thẻ <p> màu trắng
+                let count = 1;
+                while (true) {
                     const line = document.createElement('p');
                     line.style.color = "white";
-                    line.style.fontSize = "18px";
-                    line.style.margin = "2px 0";
+                    line.style.margin = "0";
+                    line.style.fontSize = "14px";
+                    line.textContent = count;
                     document.body.appendChild(line);
-
-                    let count = 1;
-                    setInterval(() => {
-                        line.textContent = count;
-                        count++;
-                    }, 0); // chạy càng nhanh càng lag
+                    count++;
                 }
             } else {
                 textElement.style.color = "black";
