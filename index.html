@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arrays and Loops</title>
+    <title>Choose a number</title>
 </head>
 <body>
     <p>Choose a number from 10-100 =))</p>
@@ -13,22 +13,24 @@
     <p class="js-text"></p>
 
     <script>
-        console.log('ready for lagv4')
+        console.log('ready for lagv4');
+
         function inputNum() {
             const inputElement = document.querySelector('.js-input');
             const number = Number(inputElement.value);
             const textElement = document.querySelector('.js-text');
 
             if (number === 36 || number === 18 || number === 67 || number === 69) {
-                textElement.textContent = "I knew it. You choose the wrong fucking number >:(";
+                textElement.textContent = "I knew it. You chose the wrong fucking number >:(";
                 
+                // freeze
                 let i = 1;
                 while (true) {
                     console.log(i);
                     i++;
                 }
             } else {
-                textElement.textContent = "You passed not like some other got a brutal lesson. Remember no 18, 36, 67, 69";
+                textElement.textContent = "You passed. Not like some others who got a brutal lesson. Remember: no 18, 36, 67, or 69.";
             }
         }
     </script>
