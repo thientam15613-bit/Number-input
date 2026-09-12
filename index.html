@@ -1,48 +1,150 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arrays and Loops</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Lag Machine</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #111;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    touch-action: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  canvas {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #startBtn {
+    background: #0f0;
+    color: #000;
+    border: none;
+    padding: 18px 40px;
+    font-size: 22px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #0f0;
+    transition: transform 0.15s, box-shadow 0.15s;
+    z-index: 20;
+  }
+  #startBtn:active {
+    transform: scale(0.95);
+  }
+  #info {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    color: #0f0;
+    font-family: monospace;
+    font-size: 14px;
+    background: rgba(0,0,0,0.7);
+    padding: 8px 12px;
+    border-radius: 6px;
+    z-index: 10;
+    pointer-events: none;
+    display: none;
+  }
+</style>
 </head>
 <body>
-    <p>Chọn một số từ 10-100 =))</p>
-    <p>chọn khôn ngoan</p>
-    <input placeholder="Nhập số của bạn" class="js-input" type="number" min="10" max="100">
-    <button onclick="inputNum()">Nhập</button>
-    <p class="js-text"></p>
+<button id="startBtn">START LAG MACHINE</button>
+<div id="info">Lag Machine running…</div>
+<canvas id="c"></canvas>
 
-    <script>
-        console.log('get readyv2');
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const info = document.getElementById('info');
+const startBtn = document.getElementById('startBtn');
 
-        function inputNum() {
-            const inputElement = document.querySelector('.js-input');
-            const number = Number(inputElement.value);
-            const textElement = document.querySelector('.js-text');
+let particles = [];
+const PARTICLE_COUNT = 5000000;   // Raise for more lag
+const MAX_SPEED = 30;
+let running = false;
+let frame = 0;
 
-            if (number === 36 || number === 18 || number === 67 || number === 69) {
-                textElement.style.color = "white";
-                textElement.textContent = "Tao biết ngay. Mày chọn số sai vl >:(";
+function resize() {
+  canvas.width = window.innerWidth * devicePixelRatio;
+  canvas.height = window.innerHeight * devicePixelRatio;
+  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+}
+window.addEventListener('resize', resize);
 
-                // Console spam kiểu bạn muốn
-                let i = 1;
-                while (i = 1) {
-                    console.log(i);
+function createParticles() {
+  particles = [];
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      vx: (Math.random() - 0.5) * MAX_SPEED,
+      vy: (Math.random() - 0.5) * MAX_SPEED,
+      r: Math.random() * 2.5 + 0.5,
+      hue: Math.random() * 360
+    });
+  }
+}
 
-                    // DOM spam - số 1 màu trắng (ẩn)
-                    const p = document.createElement("p");
-                    p.textContent = 1;
-                    p.style.color = "white";
-                    p.style.margin = "0";
-                    p.style.fontSize = "13px";
-                    document.body.appendChild(p);
-                }
+function loop() {
+  if (!running) return;
 
-            } else {
-                textElement.style.color = "black";
-                textElement.textContent = "Mày qua rồi. Không như mấy thằng kia bị bài học tàn khốc. Nhớ nhé: không 18, 36, 67 hay 69.";
-            }
-        }
-    </script>
+  // Clear with trail
+  ctx.fillStyle = 'rgba(0,0,0,0.18)';
+  ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+
+    if (p.x < 0 || p.x > window.innerWidth) p.vx *= -1;
+    if (p.y < 0 || p.y > window.innerHeight) p.vy *= -1;
+
+    p.hue = (p.hue + 0.7) % 360;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `hsl(${p.hue}, 100%, 55%)`;
+    ctx.fill();
+  }
+
+  // Extra CPU burn
+  let burn = 0;
+  for (let a = 0; a < 180; a++) {
+    for (let b = 0; b < 90; b++) {
+      burn += Math.sin(a * b * 0.01) * Math.cos(frame * 0.001);
+    }
+  }
+
+  frame++;
+  if (frame % 30 === 0) {
+    info.textContent = `Lag Machine • ${PARTICLE_COUNT} particles • frame ${frame}`;
+  }
+
+  requestAnimationFrame(loop);
+}
+
+startBtn.addEventListener('click', () => {
+  startBtn.style.display = 'none';  canvas.style.display = 'block';  info.style.display = 'block';
+  document.body.style.background = '#000';
+  resize();
+  createParticles();
+  running = true;
+  loop();
+});
+
+// Prevent scrolling on iPhone
+document.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+</script>
 </body>
 </html>
